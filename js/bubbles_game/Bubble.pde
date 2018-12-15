@@ -1,20 +1,18 @@
-class Ball {
+class Bubble {
   PVector position;
   PVector velocity;
   float radius = 20;
   
-  float r; 
-  float g; 
-  float b;
+  float r, g, b;
   
- Ball(float r, float g, float b) {
-    position = new PVector(random(0,width), random(0,height));
-    velocity = PVector.random2D();
-    velocity.mult(2);
+ Bubble(float r, float g, float b) {
+    this.position = new PVector(random(0,width), random(0,height));
+    this.velocity = PVector.random2D();
+    velocity.mult(3);
 
-    this.r = r; //<>//
-    this.g = g; //<>//
-    this.b = b; //<>//
+    this.r = r;
+    this.g = g;
+    this.b = b;
  }
   
   void checkBoundaryCollision() {
@@ -29,10 +27,6 @@ class Ball {
       velocity.y *= -1;
     } else if (position.y < radius) {
       position.y = radius;
-      velocity.y *= -1;
-    } else if (position.x >= mouseX - 5 && position.x <= mouseX + 5) {
-      velocity.x *= -1;
-    } else if (position.y >= mouseY - 5 && position.x <= mouseY + 5) {
       velocity.y *= -1;
     }
   }
