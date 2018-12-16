@@ -4,6 +4,7 @@ class Game {
   Level currentLvl;
   ArrayList<Level> levels = new ArrayList<Level>();
   ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+  ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   
   boolean levelWon() {
    if(bubbles.size() == 0) {

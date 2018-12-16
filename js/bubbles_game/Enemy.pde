@@ -1,17 +1,27 @@
-class Enemy extends Entity {
- Enemy() {
-    super(new PVector(random(0,width), random(0,height)), PVector.random2D(), 20);
-    velocity.mult(5);
+class Enemy extends Bubble {
+  Player p1;
+  
+ Enemy(Player p1) {
+   super(178,34,34);
+   
+   this.p1 = p1;
+   velocity.mult(2);
  }
-  
-  void update() {
-    checkBoundaryCollision();
-    position.add(velocity);
-  }
-  
-  void show() {
-    noStroke();
-    fill(255,0,0);
-    ellipse(position.x, position.y, 20, 20);
-  }
+ 
+ void update() {
+   checkBoundaryCollision();
+   bouncePlayer();
+   position.add(velocity);
+ }
+ 
+ void bouncePlayer() {
+    
+    if (position.x > p1.position.x-p1.radius) {
+      position.x = width-radius;
+      velocity.x *= -1;
+    } else if (p1.position.y > p1.position.y-p1.radius) {
+      position.y = height-radius;
+      velocity.y *= -1;
+    }
+ }
 }
