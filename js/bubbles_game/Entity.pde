@@ -9,7 +9,8 @@ class Entity {
     this.radius = r;
   }
   
-void checkBoundaryCollision() {
+  // check if we're hitting the edge of the window
+  void checkBoundaryCollision() {
     if (position.x > width-radius) {
       position.x = width-radius;
       velocity.x *= -1;
