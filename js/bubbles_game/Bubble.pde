@@ -1,35 +1,15 @@
-class Bubble {
-  PVector position;
-  PVector velocity;
-  float radius = 20;
+class Bubble extends Entity {
   
   float r, g, b;
   
  Bubble(float r, float g, float b) {
-    this.position = new PVector(random(0,width), random(0,height));
-    this.velocity = PVector.random2D();
+    super(new PVector(random(0,width), random(0,height)), PVector.random2D(), 20);
     velocity.mult(3);
 
     this.r = r;
     this.g = g;
     this.b = b;
  }
-  
-  void checkBoundaryCollision() {
-    if (position.x > width-radius) {
-      position.x = width-radius;
-      velocity.x *= -1;
-    } else if (position.x < radius) {
-      position.x = radius;
-      velocity.x *= -1;
-    } else if (position.y > height-radius) {
-      position.y = height-radius;
-      velocity.y *= -1;
-    } else if (position.y < radius) {
-      position.y = radius;
-      velocity.y *= -1;
-    }
-  }
   
   void update() {
     checkBoundaryCollision();
