@@ -19,27 +19,31 @@ void setup() {
 
 void draw() {
   background(0);
+  
+  // Print the remaining bubbles in play
   textSize(16);
   fill(100);
   text("Bubbles in Play: ", 530, 30);
   text(bubbles.size(), 660, 30); 
   
+  // Start a level
   if (levelWon() && currentLevel != maxLevel) {
        this.bubbles = new ArrayList<Bubble>(levels.get(currentLevel).bubbles);
        currentLevel++;
      }
   
+  // Create the player
   p1.update();
   p1.show();
   
-  for (Bubble bubble : bubbles) {
+  // Create the bubbles
+  for (int bubbleId = 0; bubbleId < bubbles.size(); bubbleId++) {
+     Bubble bubble = bubbles.get(bubbleId);
      bubble.update();
      bubble.show();
      
-  }
-  
-  for(int bubbleId = 0; bubbleId < bubbles.size(); bubbleId++) {
-     popBubble(bubbles.get(bubbleId), bubbleId);
+     // Pop bubble on collision with player
+     popBubble(bubble, bubbleId);
   }
   
 }
