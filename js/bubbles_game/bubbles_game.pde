@@ -1,30 +1,42 @@
 
-Game currentGame = new Game();
+Game currentGame;
 int BG = 0;
 
 void setup() {
   size(700, 700);
   
+  // start the game
+  currentGame = new Game();
 }
 
 void draw() {
   background(BG);
   if (!currentGame.restart) {
+    // fade color back in from a death
     if (BG > 0) {
      BG--; 
     }
+    
+    // start the tutorial
+    if (currentGame.level.number == 0) {
+     currentGame.playTutorial(); 
+     text("Level: Tutorial", 560, 30);
+    } else {
+    // display level
+    text("Level: ", 560, 30);
+    text(currentGame.level.number, 660, 30);
+    }
+    
+    // Start a new level
+    if (currentGame.bubbles.size() == 0) {
+     currentGame.newLevel(); 
+    }
+    
     // Print the remaining bubbles in play
     textSize(16);
     fill(100);
-    text("Bubbles in Play: ", 530, 30);
-    text(currentGame.bubbles.size(), 660, 30); 
-    
-    // Play through the levels
-    if (currentGame.levelWon() && currentGame.level <= 5 ) {
-      currentGame.currentLvl = new Level(currentGame.level++);
-      currentGame.bubbles = new ArrayList<Bubble>(currentGame.currentLvl.bubbles);
-      currentGame.enemies = new ArrayList<Enemy>(currentGame.currentLvl.enemies);
-    }
+    text("Bubbles: ", 560, 50);
+    text(currentGame.bubbles.size(), 660, 50); 
   
     // Get the player
     currentGame.players.get(0).update();
@@ -53,6 +65,10 @@ void draw() {
     text("Current HP: ", 560, 70);
     text(currentGame.players.get(0).health, 660, 70);
     
+    // display score
+    text("Score: ", 560, 90);
+    text(currentGame.score, 660, 90);
+    
     // if hp == 0 set game to restart
     if (currentGame.players.get(0).health == 0) {
       currentGame.restart = true;
@@ -74,7 +90,13 @@ void draw() {
  }
  
  void keyPressed() {
-   if (key == ' ') {
-     currentGame = new Game();
-  }
+   if (currentGame.restart == true) {
+     if (key == ' ') {
+       // start new game
+       currentGame = new Game();
+       
+       // skip tutorial
+       currentGame.newLevel();
+    }
+   }
  }

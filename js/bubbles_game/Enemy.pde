@@ -6,10 +6,5 @@ class Enemy extends Bubble {
    
    velocity.mult(2);
  }
- 
- void update() {
-   checkBoundaryCollision();
-   position.add(velocity);
- }
 
 }
