@@ -12,7 +12,7 @@ void setup() {
 void draw() {
   fill(BG, BG, BG, 40);
   rect(0, 0, width, height);
-  if (!currentGame.restart && (currentGame.level.number % 2 != 0 || currentGame.level.number == 0)) {
+  if (!currentGame.restart && (currentGame.level.number % 5 != 0 || currentGame.level.number == 0)) {
     // fade color back in from a death
     if (BG > 0) {
      BG--; 
@@ -98,7 +98,7 @@ void draw() {
     text("Press Spacebar to Restart", width/2, height/2);
     
     keyPressed();
-  } else if (currentGame.level.number % 2 == 0) {
+  } else if (currentGame.level.number % 5 == 0) {
      ItemRoom IR = new ItemRoom(currentGame.level.number, currentGame.gameItems, currentGame.players.get(0));
      
      currentGame.players.get(0).update();
