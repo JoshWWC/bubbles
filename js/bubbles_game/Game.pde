@@ -5,6 +5,7 @@ class Game {
   ArrayList<Bubble> popped = new ArrayList<Bubble>();
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   ArrayList<Item> gameItems = new ArrayList<Item>();
+  ArrayList<Powerup> powerups = new ArrayList<Powerup>();
   boolean restart = false;
   int score = 0;
   

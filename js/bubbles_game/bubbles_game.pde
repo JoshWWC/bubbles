@@ -1,7 +1,6 @@
 
 Game currentGame;
 int BG = 0;
-
 void setup() {
   size(700, 700);
   
@@ -26,6 +25,7 @@ void draw() {
     } else {
     // display level
     fill(100);
+    textSize(16);
     text("Level: ", 560, 30);
     text(currentGame.level.number, 660, 30);
     }
@@ -44,6 +44,33 @@ void draw() {
     // Get the player
     currentGame.players.get(0).update();
     currentGame.players.get(0).show();
+    if (millis() % 330 == 1) {
+      currentGame.powerups.add(new Powerup(currentGame.players.get(0) ) );
+    }
+    
+    // powerups!
+    for (int powerupId = 0; powerupId < currentGame.powerups.size(); powerupId++) {
+      Powerup powerup = currentGame.powerups.get(powerupId);
+      
+      powerup.show();
+      
+      if(dist(currentGame.players.get(0).position.x, currentGame.players.get(0).position.y, powerup.position.x, 
+      powerup.position.y) <= currentGame.players.get(0).radius + 5) {
+        powerup.on = true;
+        currentGame.players.get(0).effects.add(powerup);
+        currentGame.powerups.remove(powerupId);
+        }
+      
+    }
+    
+    for (int effectId = 0; effectId < currentGame.players.get(0).effects.size(); effectId++) {
+      Powerup effect = currentGame.players.get(0).effects.get(effectId);
+     if(effect.on == true) {
+       effect.update();
+     } else {
+         currentGame.players.get(0).effects.remove(effectId);
+     }
+    }
     
     // Get the bubbles
     for (int bubbleId = 0; bubbleId < currentGame.bubbles.size(); bubbleId++) {

@@ -6,6 +6,8 @@ class Player extends Entity {
   boolean leftPressed = false;
   boolean rightPressed = false;
   ArrayList<Item> items = new ArrayList<Item>();
+  ArrayList<Powerup> effects = new ArrayList<Powerup>();
+  float velocityAmt = 2.25;
  
  Player(int hp) {
   super(new PVector(width/2, height/2), new PVector(0, 0), 15);
@@ -16,26 +18,26 @@ class Player extends Entity {
    checkBoundaryCollision();
    keyPressed();
    
-   if (upPressed && velocity.y >= -2.25) {
-    velocity.y-=2.25;
+   if (upPressed && velocity.y >= -velocityAmt) {
+    velocity.y-=velocityAmt;
     velocity.x=0;
     position.add(velocity);
   }
 
-  if (downPressed && velocity.y <= 2.25) {
-    velocity.y+=2.25;
+  if (downPressed && velocity.y <= velocityAmt) {
+    velocity.y+=velocityAmt;
     velocity.x = 0;
     position.add(velocity);
   }
 
-  if (leftPressed && velocity.x >= -2.25) {
-    velocity.x-=2.25;
+  if (leftPressed && velocity.x >= -velocityAmt) {
+    velocity.x-=velocityAmt;
     velocity.y = 0;
     position.add(velocity);
   }
 
-  if (rightPressed && velocity.x <= 2.25) {
-    velocity.x+=2.25;
+  if (rightPressed && velocity.x <= velocityAmt) {
+    velocity.x+=velocityAmt;
     velocity.y = 0;
     position.add(velocity);
     keyPressed();
