@@ -6,8 +6,8 @@ class Powerup extends Bubble{
    this.p1 = p1; 
   }
   int begin = millis();
-     int duration = 5;
-     int time = 5;
+     int duration = 7;
+     int time = 7;
  void update() {
    if (on) {
      effect();

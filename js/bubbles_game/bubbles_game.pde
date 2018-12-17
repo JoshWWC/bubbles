@@ -7,7 +7,7 @@ void setup() {
   // start the game
   currentGame = new Game();
 }
-
+int time = millis();
 void draw() {
   fill(BG, BG, BG, 40);
   rect(0, 0, width, height);
@@ -44,8 +44,12 @@ void draw() {
     // Get the player
     currentGame.players.get(0).update();
     currentGame.players.get(0).show();
-    if (millis() % 330 == 1) {
+    
+    if (millis() > time + 9000 + random(0, 3000) ) {
+      if (currentGame.powerups.size() < 4) {
       currentGame.powerups.add(new Powerup(currentGame.players.get(0) ) );
+      }
+      time = millis();
     }
     
     // powerups!
