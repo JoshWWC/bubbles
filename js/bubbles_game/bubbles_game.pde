@@ -10,8 +10,9 @@ void setup() {
 }
 
 void draw() {
-  background(BG);
-  if (!currentGame.restart) {
+  fill(BG, BG, BG, 40);
+  rect(0, 0, width, height);
+  if (!currentGame.restart && (currentGame.level.number % 2 != 0 || currentGame.level.number == 0)) {
     // fade color back in from a death
     if (BG > 0) {
      BG--; 
@@ -20,9 +21,11 @@ void draw() {
     // start the tutorial
     if (currentGame.level.number == 0) {
      currentGame.playTutorial(); 
+     fill(100);
      text("Level: Tutorial", 560, 30);
     } else {
     // display level
+    fill(100);
     text("Level: ", 560, 30);
     text(currentGame.level.number, 660, 30);
     }
@@ -47,9 +50,18 @@ void draw() {
        Bubble bubble = currentGame.bubbles.get(bubbleId);
        bubble.update();
        bubble.show();
-       
-       // Pop bubble on collision with player
-       currentGame.popBubble(bubble, bubbleId);
+
+       if(currentGame.popBubble(bubble, bubbleId)) {
+        currentGame.popped.add(bubble); 
+       }
+    }
+    
+    for (int bubbleId = 0; bubbleId < currentGame.popped.size(); bubbleId++) {
+      Bubble bubble = currentGame.popped.get(bubbleId);
+      bubble.pop();
+      if (bubble.popDelay >= 22) {
+       currentGame.popped.remove(bubbleId); 
+      }
     }
     
     // Get the enemies
@@ -73,7 +85,7 @@ void draw() {
     if (currentGame.players.get(0).health == 0) {
       currentGame.restart = true;
     }
-  } else {
+  } else if (currentGame.restart) {
     // if hp == 0, stop drawing objects and fade to wait
     // wait till spacebar then restart the game
     background(BG);
@@ -86,6 +98,15 @@ void draw() {
     text("Press Spacebar to Restart", width/2, height/2);
     
     keyPressed();
+  } else if (currentGame.level.number % 2 == 0) {
+     ItemRoom IR = new ItemRoom(currentGame.level.number, currentGame.gameItems, currentGame.players.get(0));
+     
+     currentGame.players.get(0).update();
+     currentGame.players.get(0).show();
+     
+     if(IR.draw() ) {
+        currentGame.newLevel(); 
+     }
   }
  }
  

@@ -1,9 +1,9 @@
 class Entity {
   PVector position;
   PVector velocity;
-  int radius;
+  float radius;
   
-  Entity(PVector p, PVector v, int r) {
+  Entity(PVector p, PVector v, float r) {
     this.position = p;
     this.velocity = v;
     this.radius = r;

@@ -1,9 +1,11 @@
 class Player extends Entity {
   int health = 3;
+  boolean hasStick = false;
   boolean upPressed = false;
   boolean downPressed = false;
   boolean leftPressed = false;
   boolean rightPressed = false;
+  ArrayList<Item> items = new ArrayList<Item>();
  
  Player(int hp) {
   super(new PVector(width/2, height/2), new PVector(0, 0), 15);
@@ -44,6 +46,9 @@ class Player extends Entity {
      noFill();
      stroke(255);
      ellipse(position.x, position.y, radius, radius); 
+     for (Item item : items) {
+        item.show(); 
+     }
     }
     
     void keyPressed() {
@@ -89,6 +94,10 @@ class Player extends Entity {
     } if (position.y < radius) {
       position.y = radius;
     }
+  }
+  
+  void getItem(Item item) {
+    items.add(item);
   }
     
 }
