@@ -16,24 +16,30 @@ class Player extends Entity {
    checkBoundaryCollision();
    keyPressed();
    
-   if (upPressed && velocity.y >= -1.4) {
-    velocity.y-=1.4;
+   if (upPressed && velocity.y >= -2.25) {
+    velocity.y-=2.25;
+    velocity.x=0;
     position.add(velocity);
   }
 
-  if (downPressed && velocity.y <= 1.4) {
-    velocity.y+=1.4;
+  if (downPressed && velocity.y <= 2.25) {
+    velocity.y+=2.25;
+    velocity.x = 0;
     position.add(velocity);
   }
 
-  if (leftPressed && velocity.x >= -1.4) {
-    velocity.x-=1.4;
+  if (leftPressed && velocity.x >= -2.25) {
+    velocity.x-=2.25;
+    velocity.y = 0;
     position.add(velocity);
   }
 
-  if (rightPressed && velocity.x <= 1.4) {
-    velocity.x+=1.4;
+  if (rightPressed && velocity.x <= 2.25) {
+    velocity.x+=2.25;
+    velocity.y = 0;
     position.add(velocity);
+    keyPressed();
+    keyReleased();
   }
    
    keyReleased();
