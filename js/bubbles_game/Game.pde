@@ -2,6 +2,7 @@ class Game {
   Level level;
   ArrayList<Player> players = new ArrayList<Player>();
   ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
+  ArrayList<Bubble> popped = new ArrayList<Bubble>();
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   boolean restart = false;
   int score = 0;
@@ -49,14 +50,19 @@ class Game {
       this.enemies = new ArrayList<Enemy>(level.enemies);
    }
 
+
   // if player hits bubble, delete it
-  void popBubble(Bubble bubble, int bubbleId) {
+  boolean popBubble(Bubble bubble, int bubbleId) {
     // if player's position reaches bubble position, collission occured
     if(dist(players.get(0).position.x, players.get(0).position.y, bubble.position.x, bubble.position.y) <= players.get(0).radius + 5) {
+        Bubble temp = bubbles.get(bubbleId);
         bubbles.remove(bubbleId);
         score+=100;
+        return true;
     }
+    return false;
   }
+  
   
   // decrement player hp and bounce enemy on hit
   void hitPlayer(Player p1, Enemy e) {

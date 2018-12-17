@@ -10,7 +10,8 @@ void setup() {
 }
 
 void draw() {
-  background(BG);
+  fill(BG, BG, BG, 40);
+  rect(0, 0, width, height);
   if (!currentGame.restart) {
     // fade color back in from a death
     if (BG > 0) {
@@ -47,9 +48,18 @@ void draw() {
        Bubble bubble = currentGame.bubbles.get(bubbleId);
        bubble.update();
        bubble.show();
-       
-       // Pop bubble on collision with player
-       currentGame.popBubble(bubble, bubbleId);
+
+       if(currentGame.popBubble(bubble, bubbleId)) {
+        currentGame.popped.add(bubble); 
+       }
+    }
+    
+    for (int bubbleId = 0; bubbleId < currentGame.popped.size(); bubbleId++) {
+      Bubble bubble = currentGame.popped.get(bubbleId);
+      bubble.pop();
+      if (bubble.popDelay >= 22) {
+       currentGame.popped.remove(bubbleId); 
+      }
     }
     
     // Get the enemies
