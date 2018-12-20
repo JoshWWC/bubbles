@@ -45,6 +45,8 @@ class Game {
       text("You can move using the arrow keys.", width/2, 550);
       text("Move to the bubble to eat it and start the game!", width/2, 570);
       text("You can also just die if you want to.", width/2, 590);
+      text("Pick up the golden powerups fast to maximize their effect time!", width/2, 610);
+      text("(You also get +1 hp when it's done.)", width/2, 630);
       textAlign(BASELINE);
     }
   }
