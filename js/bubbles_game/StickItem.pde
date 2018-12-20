@@ -1,3 +1,5 @@
+// this is so overpowered and feels laggy
+
 class StickItem extends Item {
   Player p1;
   StickItem(Player p1) {

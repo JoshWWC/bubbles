@@ -1,6 +1,10 @@
+/* A given game state has a player, a level with bubbles, enemies and powerups,
+ * and a list of all the items in the game. We also track score here.
+ */
+
 class Game {
   Level level;
-  ArrayList<Player> players = new ArrayList<Player>();
+  ArrayList<Player> players = new ArrayList<Player>(); // currently always just one player, but... scalability?
   ArrayList<Bubble> bubbles = new ArrayList<Bubble>();
   ArrayList<Bubble> popped = new ArrayList<Bubble>();
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -10,19 +14,22 @@ class Game {
   int score = 0;
   
   Game() {
-    this.level = new Level(0);
+    this.level = new Level(0); // init to tutorial
     
-    bubbles.add(new Bubble(100, 90, 150) );
-    enemies.add(new Enemy() );
+    bubbles.add(new Bubble(100, 90, 150) ); // tutorial bubble
+    enemies.add(new Enemy() );              // tutorial enemy
     
     // create a player
     this.players.add(0, new Player(3) );
     
-    addGameItems();
+    addGameItems(); // init all the game items
   }
   
+  // if level == 0 we play the tutorial!
   void playTutorial() {
     if (bubbles.size() > 0 && enemies.size() > 0) {
+      
+      // ------ tutorial bubble ------
       bubbles.get(0).position.x = 200;
       bubbles.get(0).position.y = 500;
       bubbles.get(0).velocity.x = 0;
@@ -42,6 +49,7 @@ class Game {
       fill(255);
       text("This is an enemy!", 500, 450);
       
+      // ------ tutorial text ------
       text("You can move using the arrow keys.", width/2, 550);
       text("Move to the bubble to eat it and start the game!", width/2, 570);
       text("You can also just die if you want to.", width/2, 590);
@@ -50,6 +58,8 @@ class Game {
       textAlign(BASELINE);
     }
   }
+  
+  // go to next level
   void newLevel() {
       level = new Level(++this.level.number);
       this.bubbles = new ArrayList<Bubble>(level.bubbles);
@@ -66,10 +76,12 @@ class Game {
         return true;
     }
     
+    // this is... stupid... I can't get around it without spending too much time.
     if (players.get(0).hasStick) {
       Player p1 = players.get(0);
       
-      // times by 1.001 since it's NEVER exact. Unsure why, maybe has to do with floating point inaccuracies?
+      // we need to check if any bubble contacts the stick.
+      // (times by 1.001 since it's NEVER exact. Unsure why, maybe has to do with floating point inaccuracies?)
       // if dist(a,c) + dist(b,c) == dist(a,b) then c is on the line
       if (dist(width/2,height/2, bubble.position.x,bubble.position.y) + 
         dist(p1.position.x, p1.position.y, bubble.position.x, bubble.position.y) 

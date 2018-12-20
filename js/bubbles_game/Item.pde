@@ -1,3 +1,8 @@
+/* Going to fill this out more later with actual defaults.
+ * 
+ *
+ */
+
 class Item {
   PVector position;
   float itemWidth;

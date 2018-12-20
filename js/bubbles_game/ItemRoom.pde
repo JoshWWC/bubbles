@@ -13,6 +13,7 @@ class ItemRoom {
   }
   
   boolean draw() {
+   // this is called in bubbles_game.draw() so BG is in scope.
    if (BG < 120) {
     BG++; 
    }

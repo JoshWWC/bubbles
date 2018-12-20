@@ -1,3 +1,11 @@
+/* Entity: A moving ellipse in the game
+ *
+ * Everything that's a moving part of the game needs to
+ * have a position, a velocity to update that position,
+ * and a radius. Nothing is allowed to go past the boundaries
+ * of the window.
+ */
+
 class Entity {
   PVector position;
   PVector velocity;

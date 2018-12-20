@@ -1,29 +1,42 @@
+/* Core principles:
+ *  The aesthetic should always be relaxing.
+ *  The difficulty should never exceed that expected of a bubble game.
+ *  Bubbles.
+ *
+ * Initial setup: We create a new game for the player
+ * and run them through the tutorial. If the player hp
+ * reaches 0 we restart. Every 5 levels is an item room.
+ *
+ * Powerups spawn at set intervals and may not exceed
+ * 3 at a time.
+ */
 
+// setup a game state and a background color
 Game currentGame;
-int BG = 0;
+int BG = 0; // this allows us to fade to white on death and then back to black on restart
 
-
-  
-  
 void setup() {
-  
-  
   size(700, 700);
   
-  // start the game
+  // start the game on load
   currentGame = new Game();
 }
-int time = millis();
+
+int time = millis(); // powerups are based on a timer
+
 void draw() {
+  // slightly transparent rect gives us the tracing behind the bubbles
   fill(BG, BG, BG, 40);
   rect(0, 0, width, height);
+  
+  // choose what to display based on if player is dead or at an item room
   if (!currentGame.restart && (currentGame.level.number % 5 != 0 || currentGame.level.number == 0)) {
     // fade color back in from a death
     if (BG > 0) {
      BG--; 
     }
     
-    // start the tutorial
+    // start the tutorial if just starting game
     if (currentGame.level.number == 0) {
      currentGame.playTutorial(); 
      fill(100);
@@ -36,7 +49,7 @@ void draw() {
     text(currentGame.level.number, 660, 30);
     }
     
-    // Start a new level
+    // Start a new level once we clear all bubbles on current level
     if (currentGame.bubbles.size() == 0) {
      currentGame.newLevel(); 
     }
@@ -47,18 +60,19 @@ void draw() {
     text("Bubbles: ", 560, 50);
     text(currentGame.bubbles.size(), 660, 50); 
   
-    // Get the player
+    // Get and show the player, update position on key presses
     currentGame.players.get(0).update();
     currentGame.players.get(0).show();
     
+    // spawn powerups on semi-random intervals
     if (millis() > time + 9000 + random(0, 3000) ) {
       if (currentGame.powerups.size() < 4) {
       currentGame.powerups.add(new Powerup(currentGame.players.get(0) ) );
       }
-      time = millis();
+      time = millis(); // update global time so intervals are consistant
     }
     
-    // powerups!
+    // powerups! Display them and allow them to be eaten.
     for (int powerupId = 0; powerupId < currentGame.powerups.size(); powerupId++) {
       Powerup powerup = currentGame.powerups.get(powerupId);
       
@@ -73,6 +87,7 @@ void draw() {
       
     }
     
+    // Player must be effected by powerups
     for (int effectId = 0; effectId < currentGame.players.get(0).effects.size(); effectId++) {
       Powerup effect = currentGame.players.get(0).effects.get(effectId);
      if(effect.on == true) {
@@ -82,17 +97,19 @@ void draw() {
      }
     }
     
-    // Get the bubbles
+    // Get the edible bubbles
     for (int bubbleId = 0; bubbleId < currentGame.bubbles.size(); bubbleId++) {
        Bubble bubble = currentGame.bubbles.get(bubbleId);
        bubble.update();
        bubble.show();
 
+       // for each bubble, on contact with player, pop
        if(currentGame.popBubble(bubble, bubbleId)) {
         currentGame.popped.add(bubble); 
        }
     }
     
+    // display the "popped" animation
     for (int bubbleId = 0; bubbleId < currentGame.popped.size(); bubbleId++) {
       Bubble bubble = currentGame.popped.get(bubbleId);
       bubble.pop();
@@ -107,46 +124,52 @@ void draw() {
        enemy.update();
        enemy.show();
        
+       // on contact with player, damage player and bounce enemy away
        currentGame.hitPlayer(currentGame.players.get(0), enemy);
     }
-    // player hp has to be displayed after hit to display accurately on death
+    // display hp
+    // (hp has to be displayed after hit to display accurately on death)
     fill(100);
     text("Current HP: ", 560, 70);
     text(currentGame.players.get(0).health, 660, 70);
     
-    // display score
+    // display score, incremented by +100 every bubble eaten
     text("Score: ", 560, 90);
     text(currentGame.score, 660, 90);
     
-    // if hp == 0 set game to restart
+    // if hp == 0 we need to restart
     if (currentGame.players.get(0).health == 0) {
       currentGame.restart = true;
     }
   } else if (currentGame.restart) {
-    // if hp == 0, stop drawing objects and fade to wait
+    // if hp == 0, stop drawing objects and fade to
     // wait till spacebar then restart the game
     background(BG);
     if (BG < 255) {
       BG++;
     }
     
+    // tell player how to restart
     textAlign(CENTER);
     fill(0);
     text("Press Spacebar to Restart", width/2, height/2);
     
-    keyPressed();
+    keyPressed(); // wait for the spacebar
   } else if (currentGame.level.number % 5 == 0) {
+    // if we're at an item room level, display the item room instead of bubbles
      ItemRoom IR = new ItemRoom(currentGame.level.number, currentGame.gameItems, currentGame.players.get(0));
      
      currentGame.players.get(0).update();
      currentGame.players.get(0).show();
      
+     // draw is returning true when an item is picked. If item is picked we go to a new level.
      if(IR.draw() ) {
         currentGame.newLevel(); 
      }
   }
  }
  
+ // wait for the space key to restart game
  void keyPressed() {
    if (currentGame.restart == true) {
      if (key == ' ') {
