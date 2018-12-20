@@ -1,7 +1,19 @@
 
 Game currentGame;
 int BG = 0;
+
+import processing.sound.*;
+  
+  SoundFile file;
+
+  String audioName = "8-Bit.wav";
+  String path;
 void setup() {
+  
+  path = sketchPath(audioName);
+    file = new SoundFile(this, path);
+    file.loop();
+  
   size(700, 700);
   
   // start the game
