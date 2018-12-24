@@ -5,12 +5,17 @@
  */
 
 class Enemy extends Bubble {
-  
+  PImage enemyImage;
   
  Enemy() {
    super(178,34,34);
-   
+   enemyImage = loadImage("enemy.png");
    velocity.mult(2);
  }
+ 
+ void show() {
+    noStroke();
+    image(enemyImage, position.x, position.y);
+  }
 
 }

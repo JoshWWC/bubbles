@@ -18,7 +18,6 @@ int BG = 0; // this allows us to fade to white on death and then back to black o
 void setup() {
   size(700, 700);
   
-  
   // start the game on load
   currentGame = new Game();
 }
