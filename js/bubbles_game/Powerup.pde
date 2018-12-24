@@ -12,6 +12,9 @@ class Powerup extends Bubble{
    if (on) {
      effect();
      
+     if ((millis() - begin)/1000 > 5) {
+       begin = millis() - 4000; // powerup lasts at least 1s
+     }
      
      if (time > 0)  {
        time = duration - (millis() - begin)/1000;

@@ -26,8 +26,9 @@ int time = millis(); // powerups are based on a timer
 
 // ** NEEDS TO BE SIGNIFICANTLY REFACTORED
 void draw() {
+  
   // slightly transparent rect gives us the tracing behind the bubbles
-  fill(BG, BG, BG, 40);
+  fill(BG, BG, BG, 90);
   rect(0, 0, width, height);
   
   // choose what to display based on if player is dead or at an item room
@@ -41,6 +42,7 @@ void draw() {
     if (currentGame.level.number == 0) {
      currentGame.playTutorial(); 
      fill(100);
+     textSize(16);
      text("Level: Tutorial", 560, 30);
     } else {
     // display level
