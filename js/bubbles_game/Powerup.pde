@@ -27,7 +27,7 @@ class Powerup extends Bubble{
  
  void effect() {
    fill (random(255), random(255), random(255) );
-   ellipse(p1.position.x, p1.position.y, p1.radius, p1.radius );
+   ellipse(p1.position.x+6.5, p1.position.y+5.5, p1.radius+1, p1.radius+1 );
    p1.velocityAmt = 4.75;
  }
 }

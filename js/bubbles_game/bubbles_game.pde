@@ -18,12 +18,14 @@ int BG = 0; // this allows us to fade to white on death and then back to black o
 void setup() {
   size(700, 700);
   
+  
   // start the game on load
   currentGame = new Game();
 }
 
 int time = millis(); // powerups are based on a timer
 
+// ** NEEDS TO BE SIGNIFICANTLY REFACTORED
 void draw() {
   // slightly transparent rect gives us the tracing behind the bubbles
   fill(BG, BG, BG, 40);

@@ -8,10 +8,13 @@ class Player extends Entity {
   ArrayList<Item> items = new ArrayList<Item>();
   ArrayList<Powerup> effects = new ArrayList<Powerup>();
   float velocityAmt = 2.25;
+  PImage playerImage;
  
  Player(int hp) {
   super(new PVector(width/2, height/2), new PVector(0, 0), 15);
   this.health = hp;
+  
+  playerImage = loadImage("player.png"); // load player image
  }
  
  void update() {
@@ -52,8 +55,9 @@ class Player extends Entity {
   
   void show() {
      noFill();
-     stroke(255);
-     ellipse(position.x, position.y, radius, radius); 
+     noStroke();
+     ellipse(position.x, position.y, radius, radius);
+     image(playerImage, position.x, position.y);
      for (Item item : items) {
         item.show(); 
      }

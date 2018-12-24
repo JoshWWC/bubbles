@@ -34,6 +34,7 @@ class UpgradeItem extends Item {
   }
   
   void show() {
-    ellipse(p1.position.x, p1.position.y, this.oldR, this.oldR);
+    stroke(255);
+    ellipse(p1.position.x+6.5, p1.position.y+5, this.upgradeRadius, this.upgradeRadius);
   }
 }
